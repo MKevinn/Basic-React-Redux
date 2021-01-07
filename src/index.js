@@ -4,42 +4,18 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {createStore} from 'redux';
+import rootReducers from './reducers';
+import {Provider} from 'react-redux';
 
-// ACTIONS
-const increment = () => {
-  return {
-    type: 'INCREMENT'
-  }
-}
-
-const decrement = () => {
-  return {
-    type: 'DECREMENT'
-  }
-}
-
-// REDUCER
-const counter = (state=0, action) => {
-  switch (action.type) {
-    case 'INCREMENT':
-      return state+1;
-    case 'DECREMENT':
-      return state-1;
-  }
-}
-
-let store = createStore(counter);
-
-// Display it in console
-store.subscribe(() => console.log(store.getState()));
-
-// DISPATCH
-store.dispatch(increment());
+const store = createStore(
+  rootReducers,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
 
 ReactDOM.render(
-  <React.StrictMode>
+  <Provider store={store}>
     <App />
-  </React.StrictMode>,
+  </Provider>,
   document.getElementById('root')
 );
 
